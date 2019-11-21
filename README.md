@@ -5,11 +5,12 @@ This test sets up a gadget on the Coral Dev board with one interface with two al
 
 It consists in two software. The first runs as a driver on the dev board, and the second runs on the host computer that sends a SET_INTERFACE setup command to the dev board before exiting.
 
+NOTE: The code can be used on a raspberry pi by modifying the location of functionfs.h in the file Dev Board/functionFSTest.c . Replace line 14 with `#include <linux/usb/functionfs.h>` should do the trick.
 
 ## Compilation
 ### On the dev board
 - Files: functionFsTest.c
-- Requirements: linux kernel headers  (needed for functionfs.h)
+- Requirements: linux kernel headers  (needed for functionfs.h) (not needed for Raspberry Pi)
 - To compile: cc -Wall -o functionFsTest functionFsTest.c -pthread
 
 ### On the host computer
@@ -26,6 +27,7 @@ The dev board and the computer must be connected by a USB cable from the start t
 - Run the script to setup the gadget: sudo sh usbGadgetStart.sh
 - Launch the driver: sudo ./functionFSTest
 - Bind the gadget to the UDC: echo 38100000.dwc3 /sys/kernel/config/usb_gadget/gadget/UDC
+NOTE: The UDC might be different on the raspberry pi.
 
 ### On the host computer
 - Launch the test software: sudo ./usbTester
